@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842A48971FDE6CB200475F2C /* YXRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A48961FDE6CB200475F2C /* YXRecordView.swift */; };
 		8430D3AD1FD7E64C009DAD92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3AC1FD7E64C009DAD92 /* AppDelegate.swift */; };
 		8430D3AF1FD7E64C009DAD92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3AE1FD7E64C009DAD92 /* ViewController.swift */; };
 		8430D3B21FD7E64C009DAD92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8430D3B01FD7E64C009DAD92 /* Main.storyboard */; };
@@ -15,7 +16,10 @@
 		8430D3C21FD7E64C009DAD92 /* ShortVideoRecordingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3C11FD7E64C009DAD92 /* ShortVideoRecordingTests.swift */; };
 		8430D3CD1FD7E64C009DAD92 /* ShortVideoRecordingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3CC1FD7E64C009DAD92 /* ShortVideoRecordingUITests.swift */; };
 		8430D3DB1FD7E67F009DAD92 /* YXBaseRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DA1FD7E67F009DAD92 /* YXBaseRecordManager.swift */; };
-		8430D3DD1FD7F6D3009DAD92 /* YXRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DC1FD7F6D3009DAD92 /* YXRecordManager.swift */; };
+		8430D3DD1FD7F6D3009DAD92 /* YXMoviesRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DC1FD7F6D3009DAD92 /* YXMoviesRecordManager.swift */; };
+		846AA5241FE92C8300EF5910 /* HAVPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 846AA5231FE92C8300EF5910 /* HAVPlayer.m */; };
+		84927C901FE8AE2400F59379 /* YXRoundProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84927C8F1FE8AE2400F59379 /* YXRoundProgressView.swift */; };
+		84927C921FE902BA00F59379 /* YXAVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84927C911FE902BA00F59379 /* YXAVPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		842A48961FDE6CB200475F2C /* YXRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRecordView.swift; sourceTree = "<group>"; };
 		8430D3A91FD7E64C009DAD92 /* ShortVideoRecording.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShortVideoRecording.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8430D3AC1FD7E64C009DAD92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8430D3AE1FD7E64C009DAD92 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,7 +55,11 @@
 		8430D3CC1FD7E64C009DAD92 /* ShortVideoRecordingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortVideoRecordingUITests.swift; sourceTree = "<group>"; };
 		8430D3CE1FD7E64C009DAD92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8430D3DA1FD7E67F009DAD92 /* YXBaseRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBaseRecordManager.swift; sourceTree = "<group>"; };
-		8430D3DC1FD7F6D3009DAD92 /* YXRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRecordManager.swift; sourceTree = "<group>"; };
+		8430D3DC1FD7F6D3009DAD92 /* YXMoviesRecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMoviesRecordManager.swift; sourceTree = "<group>"; };
+		846AA5221FE92C8300EF5910 /* HAVPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HAVPlayer.h; sourceTree = "<group>"; };
+		846AA5231FE92C8300EF5910 /* HAVPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HAVPlayer.m; sourceTree = "<group>"; };
+		84927C8F1FE8AE2400F59379 /* YXRoundProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRoundProgressView.swift; sourceTree = "<group>"; };
+		84927C911FE902BA00F59379 /* YXAVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAVPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +112,13 @@
 			children = (
 				8430D3AC1FD7E64C009DAD92 /* AppDelegate.swift */,
 				8430D3AE1FD7E64C009DAD92 /* ViewController.swift */,
+				84927C8F1FE8AE2400F59379 /* YXRoundProgressView.swift */,
+				842A48961FDE6CB200475F2C /* YXRecordView.swift */,
+				84927C911FE902BA00F59379 /* YXAVPlayer.swift */,
 				8430D3DA1FD7E67F009DAD92 /* YXBaseRecordManager.swift */,
-				8430D3DC1FD7F6D3009DAD92 /* YXRecordManager.swift */,
+				8430D3DC1FD7F6D3009DAD92 /* YXMoviesRecordManager.swift */,
+				846AA5221FE92C8300EF5910 /* HAVPlayer.h */,
+				846AA5231FE92C8300EF5910 /* HAVPlayer.m */,
 				8430D3B01FD7E64C009DAD92 /* Main.storyboard */,
 				8430D3B31FD7E64C009DAD92 /* Assets.xcassets */,
 				8430D3B51FD7E64C009DAD92 /* LaunchScreen.storyboard */,
@@ -267,8 +281,12 @@
 			files = (
 				8430D3AF1FD7E64C009DAD92 /* ViewController.swift in Sources */,
 				8430D3AD1FD7E64C009DAD92 /* AppDelegate.swift in Sources */,
+				846AA5241FE92C8300EF5910 /* HAVPlayer.m in Sources */,
+				84927C921FE902BA00F59379 /* YXAVPlayer.swift in Sources */,
+				84927C901FE8AE2400F59379 /* YXRoundProgressView.swift in Sources */,
 				8430D3DB1FD7E67F009DAD92 /* YXBaseRecordManager.swift in Sources */,
-				8430D3DD1FD7F6D3009DAD92 /* YXRecordManager.swift in Sources */,
+				842A48971FDE6CB200475F2C /* YXRecordView.swift in Sources */,
+				8430D3DD1FD7F6D3009DAD92 /* YXMoviesRecordManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B4V533E2T3;
 				INFOPLIST_FILE = ShortVideoRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfsj.ShortVideoRecording;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -452,6 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B4V533E2T3;
 				INFOPLIST_FILE = ShortVideoRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hfsj.ShortVideoRecording;
 				PRODUCT_NAME = "$(TARGET_NAME)";

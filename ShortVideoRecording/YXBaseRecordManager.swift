@@ -17,14 +17,14 @@ class YXBaseRecordManager: NSObject{
         return captureSession
     }()
     
-    lazy var  captureDevice : AVCaptureDevice = {
+    lazy var  vedioCaptureDevice : AVCaptureDevice = {
         var device : AVCaptureDevice?
         var captureDevices : NSArray
         if #available(iOS 10, *){
-            captureDevices = AVCaptureDevice.devices(for: AVMediaType.video) as NSArray
-        }else{
             let devicesIOS10 = AVCaptureDevice.DiscoverySession.init(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.front)
             captureDevices = devicesIOS10.devices as NSArray
+        }else{
+            captureDevices = AVCaptureDevice.devices(for: AVMediaType.video) as NSArray
         }
         for  devices in captureDevices {
             if (devices as! AVCaptureDevice).position == .front{
@@ -34,18 +34,45 @@ class YXBaseRecordManager: NSObject{
         return device!
     }()
     
+    lazy var  audioCaptureDevice : AVCaptureDevice = {
+        var device : AVCaptureDevice?
+        var captureDevices : NSArray
+        if #available(iOS 10, *){
+            let devicesIOS10 = AVCaptureDevice.DiscoverySession.init(deviceTypes: [AVCaptureDevice.DeviceType.builtInMicrophone], mediaType: AVMediaType.audio, position: AVCaptureDevice.Position.front)
+            captureDevices = devicesIOS10.devices as NSArray
+        }else{
+            captureDevices = AVCaptureDevice.devices(for: AVMediaType.audio) as NSArray
+        }
+        for  devices in captureDevices {
+            device = (devices as! AVCaptureDevice)
+        }
+        return device!
+    }()
+    
     lazy var queue : DispatchQueue = {
        let queue = DispatchQueue.init(label: "www.captureQue.com")
         return queue
     }()
     
-    lazy var videoDataOutput : AVCaptureMovieFileOutput = {
-        let  videoDataOutput  = AVCaptureMovieFileOutput.init()
-        return videoDataOutput
+    lazy var moviesDataOutput : AVCaptureMovieFileOutput = {
+        let  moviesDataOutput  = AVCaptureMovieFileOutput.init()
+        return moviesDataOutput
     }()
-
-    var activeVideoInput : AVCaptureDeviceInput?
     
+    lazy var videoDataOutput : AVCaptureVideoDataOutput = {
+       let videoDataOutput = AVCaptureVideoDataOutput.init()
+        videoDataOutput.alwaysDiscardsLateVideoFrames = true
+       return videoDataOutput
+    }()
+    
+    lazy var audioDataOutput:AVCaptureAudioDataOutput = {
+       let audioDataOutput = AVCaptureAudioDataOutput.init()
+        return audioDataOutput
+    }()
+    
+    var activeVideoInput : AVCaptureDeviceInput?
+    var videoConnection:AVCaptureConnection?
+
     override init() {
         super.init()
         
@@ -59,7 +86,7 @@ class YXBaseRecordManager: NSObject{
 
     func stopSession()  {
         if captureSession.isRunning {
-            captureSession.startRunning()
+            captureSession.stopRunning()
         }
     }
     
@@ -83,8 +110,7 @@ class YXBaseRecordManager: NSObject{
     }
     
     func configureConnection()  {
-        var videoConnection:AVCaptureConnection?
-        for connection in self.videoDataOutput.connections {
+        for connection in self.moviesDataOutput.connections {
             for port in connection.inputPorts{
                 if port.mediaType == AVMediaType.video{
                     videoConnection = connection
@@ -96,13 +122,40 @@ class YXBaseRecordManager: NSObject{
             if sysVer < 8.0 {
                 videoConnection?.enablesVideoStabilizationWhenAvailable = true
             }else{
-                videoConnection?.preferredVideoStabilizationMode = AVCap
+                videoConnection?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.auto
             }
         }
-        
-        
     }
     
+    func configureOutPut() -> Bool {
+        if self.captureSession.canAddOutput(self.moviesDataOutput) {
+            self.captureSession.addOutput(self.moviesDataOutput)
+        }else{
+            return false
+        }
+        return true
+    }
+    
+    func configureActiveInPut(vedioDevice : AVCaptureDevice,audioDevice : AVCaptureDevice) -> Bool {
+        do {
+            let videoInput  = try? AVCaptureDeviceInput.init(device: vedioDevice)
+            let audioInput  = try? AVCaptureDeviceInput.init(device: audioDevice)
+            if (videoInput != nil && audioInput != nil) {
+                if  self.captureSession.canAddInput(videoInput!)  {
+                    self.captureSession.addInput(videoInput!)                      }
+                if  self.captureSession.canAddInput(audioInput!){
+                    self.captureSession.addInput(audioInput!)
+                }
+                self.activeVideoInput = videoInput
+            }else{
+                return false
+            }
+        } catch let printerError as Error {
+            print(printerError)
+            return false
+        }
+        return true
+    }
     
     
     
