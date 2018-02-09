@@ -13,8 +13,7 @@ class YXAVPlayer: UIView {
 
     var videoURL:URL?{
         didSet{
-            self.removeAvPlayerNtf()
-            nextPlayer()
+            self.replacePlaybackResources()
         }
     }
         
@@ -27,7 +26,7 @@ class YXAVPlayer: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,10 +38,18 @@ class YXAVPlayer: UIView {
         self.videoURL = url
         playerLayer = AVPlayerLayer.init(player: self.player)
         playerLayer?.frame = frame
+        playerLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill;
         self.layer.addSublayer(playerLayer!)
-        bgview.insertSubview(self, at: 0)
+        self.replacePlaybackResources()
+//        bgview.insertSubview(self, at: 0)
+        bgview.addSubview(self)
     }
 
+    func replacePlaybackResources() {
+        self.removeAvPlayerNtf()
+        nextPlayer()
+    }
+    
     func nextPlayer()  {
 //        self.player.seek(to: CMTime.init(seconds: 0, preferredTimescale: (self.player.currentItem?.duration.timescale)!))
 //        self.player.seek(to: <#T##CMTime#>, toleranceBefore: <#T##CMTime#>, toleranceAfter: <#T##CMTime#>, completionHandler: <#T##(Bool) -> Void#>)

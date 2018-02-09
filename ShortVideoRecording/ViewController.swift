@@ -25,29 +25,31 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         recordManager = YXMoviesRecordManager.init()
         
-        //视图逻辑
+        //MARK:视图逻辑
         recordView = YXRecordView.init(frame: UIScreen.main.bounds)
+        
         //点击录制
         recordView?.recordButtonClick = {[weak self] in
             self?.recordManager?.startRecordingToOutputFileURL()
         }
-        //停止录制
+        //点击离开时 停止录制
         recordView?.stopRecordButtonClick = {[weak self] in
-            self?.recordManager?.stopRecordingToOutputFileURL()
+            self?.stopOutputRecording()
         }
-        
+        //重新录制
         recordView?.afreshButtonClick = {
             self.player?.isHidden = true
             self.player?.stopPlaye()
             self.recordView?.startRecordingAnimation()
         }
-        
+        //上传录制信息
         recordView?.ensureButtonClick = {
             print("开始上传")
+            
         }
         self.view.insertSubview(recordView!, at: 0)
         
-        //视频录制
+        //MARK:视频录制
         if (recordManager?.configureSession())!{
             let previewLayer = AVCaptureVideoPreviewLayer.init(session: (self.recordManager?.captureSession)!)
             previewLayer.frame = UIScreen.main.bounds
@@ -57,16 +59,20 @@ class ViewController: UIViewController {
             self.recordManager?.startSession()
         }
         
+        //MARK:开始写入录制
         recordManager?.startRecordConnections = {[weak self](captureOutput) in
             self?.keepTime = (self?.RecordsTimeMax)!;
             self?.perform(#selector(self?.onStartTranscribe(output:)), with: captureOutput, afterDelay: 0)
         }
         
-        //拍摄完成是调用
+        //MARK:拍摄完成是调用  结束写入录制
         recordManager?.endRecordConnecions = {[weak self](captureOutput,outputFileURL) in
             self?.endRecordChange()
+            //增加录制播放预览层
             if self?.player == nil {
-                self?.player = YXAVPlayer.init(frame: (self?.view.bounds)!, bgview: (self?.recordView)!, url: outputFileURL as URL)
+                self?.player = YXAVPlayer.init(frame: (UIScreen.main.bounds), bgview: (self?.recordView)!, url: outputFileURL as URL)
+                self?.recordView?.bringSubview(toFront: (self?.recordView?.afreshBtn)!)
+                self?.recordView?.bringSubview(toFront: (self?.recordView?.ensureBtn)!)
             }else{
                 self?.player?.videoURL = outputFileURL as URL
                 self?.player?.isHidden = false
@@ -74,6 +80,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //MARK:录制计时
     @objc func onStartTranscribe(output: AVCaptureFileOutput)  {
         if output.isKind(of:  AVCaptureMovieFileOutput.self) {
             keepTime -= 1
@@ -86,25 +93,30 @@ class ViewController: UIViewController {
                 self.perform(#selector(onStartTranscribe(output:)), with: output, afterDelay: 1)
             }
             else{
+                //计时结束时 停止录制
                 if output.isRecording{
-                    isVideoRecording = false
-                    recordManager?.stopRecordingToOutputFileURL()
+                    stopOutputRecording()
                 }
             }
         }
     }
     
+    //结束录制时状态改变
     func endRecordChange()  {
         self.recordView?.bgView?.clearProgress()
         self.recordView?.endRecordingAnimation()
     }
     
-
+    //结束录制
+    func stopOutputRecording()  {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        isVideoRecording = false
+        recordManager?.stopRecordingToOutputFileURL()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

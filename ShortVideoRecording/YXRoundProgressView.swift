@@ -67,8 +67,12 @@ class YXRoundProgressView: UIView {
     }
     
     func clearProgress()  {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
         currentTime = timeMax;
-//        self.isHidden = true;
+        self.currentTime = 0.0
+        self.progressValue = 0.0
+        setNeedsDisplay()
+//      self.isHidden = true;
     }
     
 }

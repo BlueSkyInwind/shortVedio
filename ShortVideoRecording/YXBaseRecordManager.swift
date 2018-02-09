@@ -38,7 +38,7 @@ class YXBaseRecordManager: NSObject{
         var device : AVCaptureDevice?
         var captureDevices : NSArray
         if #available(iOS 10, *){
-            let devicesIOS10 = AVCaptureDevice.DiscoverySession.init(deviceTypes: [AVCaptureDevice.DeviceType.builtInMicrophone], mediaType: AVMediaType.audio, position: AVCaptureDevice.Position.front)
+            let devicesIOS10 = AVCaptureDevice.DiscoverySession.init(deviceTypes: [AVCaptureDevice.DeviceType.builtInMicrophone], mediaType: AVMediaType.audio, position: AVCaptureDevice.Position.unspecified)
             captureDevices = devicesIOS10.devices as NSArray
         }else{
             captureDevices = AVCaptureDevice.devices(for: AVMediaType.audio) as NSArray
@@ -157,7 +157,14 @@ class YXBaseRecordManager: NSObject{
         return true
     }
     
-    
+    func getUploadFileName(_ name:String,type:String) -> String {
+        let now = NSDate.init().timeIntervalSince1970
+        let formatter = DateFormatter.init()
+        formatter.dateFormat = "HHmmss"
+        let nowDate = NSDate.init(timeIntervalSince1970: now)
+        let timeStr  = formatter.string(from: nowDate as Date)
+        return name + timeStr + type
+    }
     
     
     

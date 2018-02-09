@@ -30,7 +30,6 @@ class YXRecordView: UIView {
 
     override init(frame: CGRect) {
          super.init(frame: frame)
-//        addRecordView()
         setUpUI()
     }
     
@@ -68,6 +67,8 @@ class YXRecordView: UIView {
         UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
             self.bgView?.isHidden = false
             self.centerRoundView?.isHidden = false
+            self.bgView?.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+            self.centerRoundView?.transform = CGAffineTransform.init(scaleX: 1, y: 1)
             
             self.afreshBtn?.isHidden = true
             self.ensureBtn?.isHidden = true
